@@ -1,0 +1,27 @@
+name: delaune-symfony-matthias
+recipe: symfony
+config:
+  php: "8.1"
+  via: nginx
+  webroot: public
+services:
+  database:
+    type: mysql
+    portforward: 3307
+    creds:
+      user: admin
+      password: admin
+      database: bdd-camping
+      # penser a changer les pass de la bdd dans le .env
+  node:
+    type: node:16
+    build:
+      - yarn install
+      - npm install
+tooling:
+  yarn:
+    service: node
+  node:
+    service: node
+  npm:
+    service: node

@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Site de jeux
+{% endblock %}
+
+{% block body %}
+	<h2>{{ title }}</h2>
+	<div class="d-flex flex-wrap col-sm-10 justify-content-center mt-5">
+		{% for bien in biens %}
+			<div class="card m-2 d-flex flex-column" style="width: 18rem;">
+				<img src="/images/bien/{{ bien.imagePath }}" class="card-img-top img-fluid" alt="{{ bien.typeBien.label }}" style="height:25rem;">
+				<div class="card-body">
+					<h5 class="card-title">{{ bien.typeBien.label }}</h5>
+					<p class="card-text">
+						{{ bien.typeBien.price }}
+						€</p>
+					<a href="/detail/{{ bien.id }}" class="btn btn-primary">Voir détail</a>
+				</div>
+			</div>
+		{% endfor %}
+
+	</div>
+{% endblock %}
