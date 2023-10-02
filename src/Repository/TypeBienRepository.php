@@ -21,28 +21,18 @@ class TypeBienRepository extends ServiceEntityRepository
         parent::__construct($registry, TypeBien::class);
     }
 
-//    /**
-//     * @return TypeBien[] Returns an array of TypeBien objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('t.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function getCountTypebienByBien()
+    {
+        //appel de l'entity manager
+        $entityManager = $this->getEntityManager();
 
-//    public function findOneBySomeField($value): ?TypeBien
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $query = $entityManager->createQuery(
+            'SELECT tb.id, tb.label, tb.maxPeople, tb.price, COUNT(b.id) AS total
+            FROM App\Entity\Bien b
+            JOIN b.typeBien tb
+            GROUP BY tb.id'
+        );
+
+        return $query->getResult();
+    }
 }

@@ -1,0 +1,36 @@
+{# {% set date = game.releaseDate|date('d/m/Y') %}
+ #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="card my-3">
+		<div class="d-flex flex-row g-0">
+			<div>
+				<img src="/images/bien/{{ bien.imagePath}}" alt="{{ bien.label }} pour {{ bien.maxPeople }} personnes" class="img-fluid">
+			</div>
+			<div class="col-md-6">
+				<div class="card-body">
+					<h5 class="card-title text-primary">{{ bien.label }}
+						pour
+						{{ bien.maxPeople }}
+						personnes</h5>
+					<p class="card-text pt-2">
+						{{ bien.description }}</p>
+					<p class="card-text">
+						<small class="text-muted">Prix:
+							<span class="text-primary fw-bold">{{ bien.price }}</span>
+						</small>
+					</p>
+					<p class="card-text">
+						<small class="text-muted">Taille:
+							<span class="text-primary fw-bold">{{ bien.size }}</span>
+						</small>
+					</p>
+					<p>ICI LES DISPONIBILITES DU BIEN</p>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+{% endblock %}

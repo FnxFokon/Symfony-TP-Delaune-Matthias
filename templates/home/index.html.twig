@@ -1,20 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Site de jeux
-{% endblock %}
-
 {% block body %}
-	<h2>{{ title }}</h2>
+	{% if camp is defined%}
+
+		<div class="d-flex flex-wrap col-sm-10 justify-content-center mt-5">
+			<div class="d-flex flex-column mb-5 border-black border-2 border-opacity-75" style="height: 24rem;">
+				<div class="card-body d-flex flex-column justify-content-center p-3">
+					<h1 class="card-title mb-5">{{ camp[0].name }}</h5>
+					<p class="card-text">
+						<span class="fw-bold">{{ camp[0].description }}</span>
+					</p>
+					<p class="card-text">
+						<span class="fw-bold">Adresse:</span>
+						{{ camp[0].address }},
+						{{ camp[0].zipCode }}
+						{{ camp[0].city }}
+						{{ camp[0].country }}
+					</p>
+					<p class="card-text">
+						<span class="fw-bold">Téléphone:</span>
+						{{ camp[0].phone }}
+					</p>
+					<p class="card-text">
+						<span class="fw-bold">Date d'ouverture:</span>
+						{{ date_open(camp[0].dateOpen) }}
+					</p>
+					<p class="card-text">
+						<span class="fw-bold">Date Fermeture:</span>
+						{{ date_close(camp[0].dateClose) }}
+					</p>
+
+				</div>
+			</div>
+		</div>
+	{% endif %}
 	<div class="d-flex flex-wrap col-sm-10 justify-content-center mt-5">
 		{% for bien in biens %}
-			<div class="card m-2 d-flex flex-column" style="width: 18rem;">
-				<img src="/images/bien/{{ bien.imagePath }}" class="card-img-top img-fluid" alt="{{ bien.typeBien.label }}" style="height:25rem;">
-				<div class="card-body">
-					<h5 class="card-title">{{ bien.typeBien.label }}</h5>
+			<div class="card m-2 d-flex flex-column gap-3 mb-5 border-black border-2 border-opacity-75" style="height: 26rem;width:25rem;">
+				<img src="/images/bien/{{ bien.imagePath }}" class="card-img-top img-fluid " alt="{{ bien.label }} pour {{ bien.maxPeople}} personnes" style="height:12rem;width:100%;">
+				<div class="card-body d-flex flex-column justify-content-center p-3">
+					<h5 class="card-title">{{ bien.label }}
+						pour
+						{{ bien.maxPeople}}
+						personnes</h5>
 					<p class="card-text">
-						{{ bien.typeBien.price }}
+						{{ bien.price }}
 						€</p>
-					<a href="/detail/{{ bien.id }}" class="btn btn-primary">Voir détail</a>
+				</div>
+				<div class="d-flex flex-column">
+					<div class="d-flex justify-content-center p-3">
+						<a href="/detail/{{ bien.id }}" class="btn btn-primary" style="width:100%;">Voir détail</a>
+					</div>
 				</div>
 			</div>
 		{% endfor %}

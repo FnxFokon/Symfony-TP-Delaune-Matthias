@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index
+{% endblock %}
+
+{% block body %}
+	<h1>Tous les biens</h1>
+
+	<a class="btn btn-success m-5" href="#">Ajouter un nouveau bien</a>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Email</th>
+				<th>Role</th>
+				<th>Nom</th>
+				<th>Prénom</th>
+				<th>Téléphone</th>
+				<th>Adresse</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in users %}
+				<tr>
+					<td>{{ user.id }}</td>
+					<td>{{ user.email }}</td>
+					<td>
+						{% for role in user.roles %}
+							{% if role == 'ROLE_ADMIN' %}
+								<span class="badge rounded-pill bg-success">Admin</span>
+							{% elseif role == 'ROLE_OWNER' %}
+								<span class="badge rounded-pill bg-primary">Propriétaire</span>
+							{% elseif role == 'ROLE_USER' %}
+								<span class="badge rounded-pill bg-secondary">Utilisateur</span>
+							{% else %}
+								<span class="badge rounded-pill bg-warning">Pas de rôle</span>
+							{% endif %}
+						{% endfor %}
+					</td>
+					<td>{{ user.lastname }}</td>
+					<td>{{ user.firstname }}</td>
+					<td>{{ user.phone }}</td>
+					<td>{{ user.address }}</td>
+					<td>
+						{# {{ path('app_user_show', {'id': user.id}) }} #}
+						<a class="btn btn-primary m-2" href="#">Voir</a>
+						<a class="btn btn-warning m-2" href="#">Modifier</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">pas d'information trouvé</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a class="btn btn-success m-2" href="#">Ajouter un nouveau bien</a>
+{% endblock %}

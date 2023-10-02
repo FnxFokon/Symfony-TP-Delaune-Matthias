@@ -21,28 +21,61 @@ class BienRepository extends ServiceEntityRepository
         parent::__construct($registry, Bien::class);
     }
 
-//    /**
-//     * @return Bien[] Returns an array of Bien objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('b.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function getBiens()
+    {
+        //appel de l'entity manager
+        $entityManager = $this->getEntityManager();
+        //on crée la query
+        $query = $entityManager->createQuery(
+            'SELECT b.id, b.imagePath, tb.label, tb.price, tb.maxPeople
+                    FROM App\Entity\Bien b
+                    JOIN b.typeBien tb'
+        );
 
-//    public function findOneBySomeField($value): ?Bien
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        return $query->getResult();
+    }
+
+    public function findBiensWithUser()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT b.id, tb.label, tb.maxPeople, u.email, u.roles, u.lastname, u.firstname, u.phone
+            FROM App\Entity\Bien b
+            JOIN b.typeBien tb
+            JOIN b.user u'
+        );
+
+        return $query->getResult();
+    }
+
+    public function findBienById($id)
+    {
+        //appel de l'entity manager
+        $entityManager = $this->getEntityManager();
+        //on crée la query
+        $query = $entityManager->createQuery(
+            'SELECT b.id, b.imagePath, b.size, b.description, tb.label, tb.price, tb.maxPeople
+            FROM App\Entity\Bien b
+            JOIN b.typeBien tb
+            WHERE b.id =:id'
+        )->setParameter('id', $id);
+
+        return $query->getOneOrNullResult();
+    }
+
+    public function findBienByTypeBien($id)
+    {
+        //appel de l'entity manager
+        $entityManager = $this->getEntityManager();
+        //on crée la query
+        $query = $entityManager->createQuery(
+            'SELECT b.id, b.imagePath, tb.label, tb.price, tb.maxPeople
+                    FROM App\Entity\Bien b
+                    JOIN b.typeBien tb
+                    WHERE tb.id =:id'
+        )->setParameter('id', $id);
+
+        return $query->getResult();
+    }
 }

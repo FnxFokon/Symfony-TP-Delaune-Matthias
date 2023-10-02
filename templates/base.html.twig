@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Ecole ERN23
+			{% block title %}L’Espadrille Volante
 			{% endblock %}
 		</title>
 
@@ -22,9 +22,9 @@
 		<link rel="stylesheet" href="/style.css">
 
 	</head>
-	<body class="d-flex flex-column align-items-center" style="margin-top:100px;">
+	<body class="d-flex flex-column align-items-center style:width=100%;">
 		{% block menu %}
-			{#  #}
+			{% include 'base/nav.html.twig' %}
 		{% endblock %}
 
 		{% block body %}

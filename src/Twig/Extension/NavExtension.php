@@ -22,7 +22,10 @@ class NavExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('function_name', [NavExtensionRuntime::class, 'doSomething']),
+            // On créer une fonction qui va se charger de récupérer les consoles d'un jeu
+            new TwigFunction('menu_items', [NavExtensionRuntime::class, 'menuItems']),
+            new TwigFunction('date_open', [NavExtensionRuntime::class, 'dateOpen']),
+            new TwigFunction('date_close', [NavExtensionRuntime::class, 'dateClose']),
         ];
     }
 }

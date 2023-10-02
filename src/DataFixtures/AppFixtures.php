@@ -23,6 +23,7 @@ class AppFixtures extends Fixture
     // Propriété pour le faker
     private Generator $faker;
 
+    // On remplie notre construct
     public function __construct(UserPasswordHasherInterface $encoder)
     {
         $this->encoder = $encoder;
@@ -31,22 +32,28 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        //
+        // ATTENTION l'ordre des "load" est très important
+
+        //on récupère la méthode loadTypeBien
         $this->loadTypeBien($manager);
+        //on récupère la méthode loadUser
         $this->loadUser($manager);
+        //on récupère la méthode loadCamping
         $this->loadCamping($manager);
+        //on récupère la méthode loadBien
         $this->loadBien($manager);
 
-
+        // On injecte les données
         $manager->flush();
     }
 
     // Méthode qui alimente les info du camping
     public function loadCamping(ObjectManager $manager)
     {
-        // name, description, address, phone, zip_code, city, country, date_open
+        // On instancie notre class
         $camping = new Camping();
-        $camping->setName('Les Pins Tranquilles');
+        // On set toutes ses propriétés
+        $camping->setName('L’Espadrille Volante');
         $camping->setDescription('Bienvenue au camping "Les Pins Tranquilles", un havre de paix niché au cœur d\'une forêt luxuriante.');
         $camping->setAddress('123 Rue des Pins');
         $camping->setPhone('+12 345 6789');
@@ -54,14 +61,14 @@ class AppFixtures extends Fixture
         $camping->setCity('Tranquilléville');
         $camping->setCountry('Imaginaria');
         $camping->setDateOpen(1714888800);
-        $camping->setDateClose(1728511200);
+        $camping->setDateClose(1728597599);
         $manager->persist($camping);
     }
 
     // Méthode qui alimente les Types de Bien
     public function loadTypeBien(ObjectManager $manager)
     {
-        // label, price, max_people
+        // On créer un tableau avec toutes nos colonne de Typebien (label, price, max_people)
         $TypebienArray = [
             ['key' => 1, 'label' => 'Mobile-Home', 'price' => '50', 'maxpeople' => '3'],
             ['key' => 2, 'label' => 'Mobile-Home', 'price' => '54', 'maxpeople' => '4'],
@@ -74,9 +81,11 @@ class AppFixtures extends Fixture
             ['key' => 9, 'label' => 'Emplacement tente', 'price' => '14', 'maxpeople' => '12'],
         ];
 
+        // On boucle sur notre tableau 
         foreach ($TypebienArray as $value) {
-
+            // On instancie notre class
             $Typebien = new Typebien();
+            // On set toutes ses propriétés
             $Typebien->setLabel($value['label']);
             $Typebien->setprice($value['price']);
             $Typebien->setMaxPeople($value['maxpeople']);
@@ -89,7 +98,10 @@ class AppFixtures extends Fixture
     // Méthode qui alimente les User
     public function loadUser(ObjectManager $manager)
     {
+        // Création de notre ADMIN
+        // On instancie notre class
         $user = new User();
+        // On set toutes ses propriétés
         $user->setEmail('admin@admin.com')
             ->setRoles(['ROLE_ADMIN'])
             ->setLastname($this->faker->lastName)
@@ -103,8 +115,11 @@ class AppFixtures extends Fixture
         $manager->persist($user);
         $this->addReference('user_1', $user);
 
+        // Création de nos propriétaires
         for ($i = 2; $i <= 24; $i++) {
+            // On instancie notre class
             $user = new User();
+            // On set toutes ses propriétés
             $user->setEmail($this->faker->email)
                 ->setRoles(['ROLE_OWNER'])
                 ->setLastname($this->faker->lastName)
@@ -120,7 +135,9 @@ class AppFixtures extends Fixture
         }
 
         for ($i = 25; $i <= 40; $i++) {
+            // On instancie notre class
             $user = new User();
+            // On set toutes ses propriétés
             $user->setEmail($this->faker->email)
                 ->setRoles(['ROLE_USER'])
                 ->setLastname($this->faker->lastName)
@@ -140,8 +157,9 @@ class AppFixtures extends Fixture
     public function loadBien(ObjectManager $manager)
     {
         for ($i = 1; $i <= 11; $i++) {
-
+            // On instancie notre class
             $bien = new Bien();
+            // On set toutes ses propriétés
             $bien->setSize($this->faker->numberBetween(8, 12));
             $bien->setImagePath("mh3.jpg");
             $bien->setDescription(implode(',', $this->faker->words(10)));
@@ -157,8 +175,9 @@ class AppFixtures extends Fixture
         }
 
         for ($i = 12; $i <= 26; $i++) {
-
+            // On instancie notre class
             $bien = new Bien();
+            // On set toutes ses propriétés
             $bien->setSize($this->faker->numberBetween(10, 15));
             $bien->setImagePath("mh4.jpg");
             $bien->setDescription(implode(',', $this->faker->words(10)));
@@ -175,8 +194,9 @@ class AppFixtures extends Fixture
 
 
         for ($i = 27; $i <= 37; $i++) {
-
+            // On instancie notre class
             $bien = new Bien();
+            // On set toutes ses propriétés
             $bien->setSize($this->faker->numberBetween(14, 18));
             $bien->setImagePath('mh5.jpeg');
             $bien->setDescription(implode(',', $this->faker->words(10)));
@@ -192,8 +212,9 @@ class AppFixtures extends Fixture
         }
 
         for ($i = 38; $i <= 50; $i++) {
-
+            // On instancie notre class
             $bien = new Bien();
+            // On set toutes ses propriétés
             $bien->setSize($this->faker->numberBetween(18, 25));
             $bien->setImagePath('mh8.jpeg');
             $bien->setDescription(implode(',', $this->faker->words(10)));
@@ -210,8 +231,9 @@ class AppFixtures extends Fixture
         }
 
         for ($i = 51; $i <= 60; $i++) {
-
+            // On instancie notre class
             $bien = new Bien();
+            // On set toutes ses propriétés
             $bien->setDescription(implode(',', $this->faker->words(10)));
             $bien->setUser($this->getReference('user_1'));
 
@@ -234,8 +256,9 @@ class AppFixtures extends Fixture
         }
 
         for ($i = 61; $i <= 90; $i++) {
-
+            // On instancie notre class
             $bien = new Bien();
+            // On set toutes ses propriétés
             $bien->setDescription(implode(',', $this->faker->words(10)));
             $bien->setUser($this->getReference('user_1'));
 
