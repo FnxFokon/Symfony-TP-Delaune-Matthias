@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un bien
+{% endblock %}
+
+{% block body %}
+	<h1>Modifier un bien</h1>
+
+	{{ include('admin/bien/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+	<a class="btn btn-primary mb-3" href="{{ path('app_bien') }}">Retour à la liste des biens</a>
+
+	{{ include('admin/bien/_delete_form.html.twig') }}
+{% endblock %}

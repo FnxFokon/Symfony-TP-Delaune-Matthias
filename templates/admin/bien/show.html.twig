@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}bien
+{% endblock %}
+
+{% block body %}
+	<h1>Bien</h1>
+
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ bien.id }}</td>
+			</tr>
+			<tr>
+				<th>Image</th>
+				<td>{{ bien.imagePath }}</td>
+			</tr>
+			<tr>
+				<th>Taille</th>
+				<td>{{ bien.size }}</td>
+			</tr>
+			<tr>
+				<th>Description</th>
+				<td>{{ bien.description }}</td>
+			</tr>
+			<tr>
+				<th>Type de bien
+				</th>
+				<td>{{ bien.typeBien.label }}</td>
+			</tr>
+			<tr>
+				<th>Prix
+				</th>
+				<td>{{ bien.typeBien.price }}</td>
+			</tr>
+			<tr>
+				<th>Nombre de place
+				</th>
+				<td>{{ bien.typeBien.maxPeople }}</td>
+			</tr>
+			<tr>
+				<th>Propriétaire</th>
+				<td>{{ bien.user.lastname }}
+					{{ bien.user.firstname }}
+					{% for role in bien.user.roles %}
+						{% if role == 'ROLE_ADMIN' %}
+							<span class="badge rounded-pill bg-success m-2 fs-10">admin</span>
+						{% elseif role == 'ROLE_OWNER' %}
+							<span class="badge rounded-pill bg-primary m-2 fs-10">Propriétaire</span>
+						{% elseif role == 'ROLE_USER' %}
+							<span class="badge rounded-pill bg-primary m-2 fs-10">Client</span>
+						{% else %}
+							<span class="badge rounded-pill bg-grey m-2 fs-10">pas de role</span>
+						{% endif %}
+					{% endfor %}
+				</td>
+			</tr>
+			<tr>
+				<th>Phone</th>
+				<td>{{ bien.user.phone }}</td>
+			</tr>
+			<tr>
+				<th>Address</th>
+				<td>{{ bien.user.address }}</td>
+			</tr>
+			<tr>
+				<th>ZipCode</th>
+				<td>{{ bien.user.zipCode }}</td>
+			</tr>
+			<tr>
+				<th>City</th>
+				<td>{{ bien.user.city }}</td>
+			</tr>
+			<tr>
+				<th>Country</th>
+				<td>{{ bien.user.country }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a class="btn btn-primary mb-3" href="{{ path('app_bien') }}">Retour à la liste des biens</a>
+
+	<a class="btn btn-warning mb-3" href="{{ path('app_bien_edit', {'id': bien.id}) }}">Modifier</a>
+
+	{{ include('admin/bien/_delete_form.html.twig') }}
+{% endblock %}

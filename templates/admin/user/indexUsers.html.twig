@@ -1,12 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User index
+{% block title %}Tous les utilisateurs
 {% endblock %}
 
 {% block body %}
-	<h1>Tous les biens</h1>
-
-	<a class="btn btn-success m-5" href="#">Ajouter un nouveau bien</a>
+	<h1 class="mb-5">Tous les utilisateurs</h1>
 
 	<table class="table">
 		<thead>
@@ -45,17 +43,15 @@
 					<td>{{ user.address }}</td>
 					<td>
 						{# {{ path('app_user_show', {'id': user.id}) }} #}
-						<a class="btn btn-primary m-2" href="#">Voir</a>
-						<a class="btn btn-warning m-2" href="#">Modifier</a>
+						<a class="btn btn-primary m-2" href="{{ path('app_user_show', {'id': user.id}) }}">Voir</a>
+						<a class="btn btn-warning m-2" href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
 					</td>
 				</tr>
 			{% else %}
 				<tr>
-					<td colspan="5">pas d'information trouvé</td>
+					<td colspan="5">Pas d'information trouvé</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
-
-	<a class="btn btn-success m-2" href="#">Ajouter un nouveau bien</a>
 {% endblock %}

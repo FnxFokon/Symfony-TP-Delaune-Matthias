@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un nouveau bien
+{% endblock %}
+
+{% block body %}
+	<h1>Créer un nouveau bien</h1>
+
+	{{ include('admin/bien/_form.html.twig') }}
+
+	<a class="btn btn-primary mb-3" href="{{ path('app_bien') }}">Retour à la liste des biens</a>
+{% endblock %}

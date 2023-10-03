@@ -21,8 +21,8 @@ class TypeBien
     #[ORM\Column]
     private ?int $price = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $maxPeople = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $maxPeople = null;
 
     #[ORM\OneToMany(mappedBy: 'typeBien', targetEntity: Bien::class)]
     private Collection $biens;

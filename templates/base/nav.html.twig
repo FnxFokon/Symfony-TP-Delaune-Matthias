@@ -54,8 +54,8 @@
 						{# Si utilisateur est admin #}
 
 							{% if is_granted('ROLE_ADMIN') %}
-								<a class="dropdown-item" href="{{ path('app_biens') }}"> Les habitations du camping</a>
-							<a class="dropdown-item" href="{{ path('app_users') }}">La liste des Clients</a>
+								<a class="dropdown-item" href="{{ path('app_bien') }}"> Les habitations du camping</a>
+							<a class="dropdown-item" href="{{ path('app_user') }}">La liste des Clients</a>
 						{% endif %}
 
 						{# Si utilisateur est propriétaire #}

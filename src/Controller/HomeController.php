@@ -4,8 +4,6 @@ namespace App\Controller;
 
 use App\Repository\BienRepository;
 use App\Repository\CampingRepository;
-use App\Repository\UserRepository;
-use App\Repository\TypeBienRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

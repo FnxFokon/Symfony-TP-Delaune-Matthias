@@ -70,15 +70,15 @@ class AppFixtures extends Fixture
     {
         // On créer un tableau avec toutes nos colonne de Typebien (label, price, max_people)
         $TypebienArray = [
-            ['key' => 1, 'label' => 'Mobile-Home', 'price' => '50', 'maxpeople' => '3'],
-            ['key' => 2, 'label' => 'Mobile-Home', 'price' => '54', 'maxpeople' => '4'],
-            ['key' => 3, 'label' => 'Mobile-Home', 'price' => '57', 'maxpeople' => '5'],
-            ['key' => 4, 'label' => 'Mobile-Home', 'price' => '64', 'maxpeople' => '8'],
-            ['key' => 5, 'label' => 'Caravane', 'price' => '45', 'maxpeople' => '2'],
-            ['key' => 6, 'label' => 'Caravane', 'price' => '48', 'maxpeople' => '4'],
-            ['key' => 7, 'label' => 'Caravane', 'price' => '54', 'maxpeople' => '6'],
-            ['key' => 8, 'label' => 'Emplacement tente', 'price' => '12', 'maxpeople' => '8'],
-            ['key' => 9, 'label' => 'Emplacement tente', 'price' => '14', 'maxpeople' => '12'],
+            ['key' => 1, 'label' => 'Mobile-Home', 'price' => '50', 'maxpeople' => 3],
+            ['key' => 2, 'label' => 'Mobile-Home', 'price' => '54', 'maxpeople' => 4],
+            ['key' => 3, 'label' => 'Mobile-Home', 'price' => '57', 'maxpeople' => 5],
+            ['key' => 4, 'label' => 'Mobile-Home', 'price' => '64', 'maxpeople' => 8],
+            ['key' => 5, 'label' => 'Caravane', 'price' => '45', 'maxpeople' => 2],
+            ['key' => 6, 'label' => 'Caravane', 'price' => '48', 'maxpeople' => 4],
+            ['key' => 7, 'label' => 'Caravane', 'price' => '54', 'maxpeople' => 6],
+            ['key' => 8, 'label' => 'Emplacement tente 8m2', 'price' => '12', 'maxpeople' => 0],
+            ['key' => 9, 'label' => 'Emplacement tente 12m2', 'price' => '14', 'maxpeople' => 0],
         ];
 
         // On boucle sur notre tableau 
