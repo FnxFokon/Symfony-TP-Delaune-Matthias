@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Bien;
 use App\Entity\User;
 use App\Form\BienType;
+use App\Form\UserType;
 use App\Repository\BienRepository;
 use App\Repository\UserRepository;
 use App\Repository\TypeBienRepository;
@@ -28,7 +29,13 @@ class AdminController extends AbstractController
         $this->encoder = $encoder;
     }
 
+    // ---------------- ---------------- ----------------
+
     // ------------- PARTIE BIEN DE L ADMIN -------------
+
+    // ---------------- ---------------- ----------------
+
+
     #[Route('/bien', name: 'app_bien')]
     public function biens(BienRepository $bienRepository): Response
     {
@@ -153,10 +160,14 @@ class AdminController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_biens', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_bien', [], Response::HTTP_SEE_OTHER);
     }
 
+    // ---------------- ---------------- ----------------
+
     //  ------------- PARTIE USER DE L ADMIN -------------
+
+    // ---------------- ---------------- ----------------
 
 
     #[Route('/user', name: 'app_user')]
@@ -207,6 +218,6 @@ class AdminController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_users', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_user', [], Response::HTTP_SEE_OTHER);
     }
 }

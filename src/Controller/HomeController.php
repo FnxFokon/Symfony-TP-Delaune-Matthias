@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Reservation;
+use App\Form\ReservationType;
 use App\Repository\BienRepository;
 use App\Repository\CampingRepository;
+use App\Repository\ReservationRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,31 +25,8 @@ class HomeController extends AbstractController
         ]);
     }
 
-    // Création de la route pour mon esapce
-    #[Route('/moncompte', name: 'app_compte')]
-    public function compte()
-    {
-        // Si l'utilisateur est admin
-        if ($this->isGranted('ROLE_ADMIN')) {
-            // Redirection vers la page admin
-            return $this->redirectToRoute('home/monCompteAdmin.html.twig', []);
-        }
-
-        // Si l'utilisateur est propriétaire
-        if ($this->isGranted('ROLE_OWNER')) {
-            // Redirection vers la page admin
-            return $this->redirectToRoute('home/monCompteOwner.html.twig', []);
-        }
-
-        // Si l'utilisateur est user
-        if ($this->isGranted('ROLE_USER')) {
-            // Redirection vers la page admin
-            return $this->redirectToRoute('home/monCompteUser.html.twig', []);
-        }
-    }
-
     #[Route('/detail/{id}', name: 'detail')]
-    public function gameById(BienRepository $bienRepository, int $id)
+    public function bienById(BienRepository $bienRepository, int $id)
     {
         $bien = $bienRepository->findBienById($id);
 
@@ -62,6 +43,43 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'title' => $title,
             'biens' => $biens,
+        ]);
+    }
+
+    #[Route('/doreservation/{id}', name: 'app_do_reservation')]
+    public function doReservation(Request $request, ReservationRepository $reservationRepository, int $id)
+    {
+        $userId = $this->getUser()->getId();
+        $reservation = new Reservation();
+        $form = $this->createForm(ReservationType::class, $reservation);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // $debutDate = 'reservation.dateBegin'; 
+            // $dateBegin = new \DateTime($debutDate);
+            // $timestampDateBegin = $dateBegin->getTimestamp();
+            // $reservation->setDateBegin($timestampDateBegin);
+
+            // $finDate = 'reservation.dateFin'; 
+            // $dateFin = new \DateTime($finDate);
+            // $timestampDateFin = $dateFin->getTimestamp();
+            // $reservation->setDateFin($timestampDateFin);
+
+            // TODO: faire une instance de USER et de BIEN pour les envoyers dans les setter
+
+
+            $reservation->setUser($userId);
+            $reservation->setBien($id);
+            $reservationRepository->save($reservation, true);
+
+            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+        }
+
+
+        return $this->renderForm('home/new.html.twig', [
+            'reservation' => $reservation,
+            'form' => $form,
         ]);
     }
 }

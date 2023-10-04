@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ReservationRepository;
+use DateTime;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
@@ -17,7 +19,7 @@ class Reservation
     private ?int $dateBegin = null;
 
     #[ORM\Column]
-    private ?int $dateFin = null;
+    private ?int $dateEnd = null;
 
     #[ORM\Column]
     private ?int $price = null;
@@ -28,6 +30,27 @@ class Reservation
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\Column]
+    private ?int $stayDay = null;
+
+    #[ORM\Column]
+    private ?int $people = null;
+
+    #[ORM\Column]
+    private ?int $children = null;
+
+    #[ORM\Column]
+    private ?int $baby = null;
+
+    #[ORM\Column]
+    private ?bool $accesspool = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateDebut = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateFin = null;
 
     public function getId(): ?int
     {
@@ -46,14 +69,14 @@ class Reservation
         return $this;
     }
 
-    public function getDateFin(): ?int
+    public function getDateEnd(): ?int
     {
-        return $this->dateFin;
+        return $this->dateEnd;
     }
 
-    public function setDateFin(int $dateFin): static
+    public function setDateEnd(int $dateEnd): static
     {
-        $this->dateFin = $dateFin;
+        $this->dateEnd = $dateEnd;
 
         return $this;
     }
@@ -90,6 +113,90 @@ class Reservation
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getStayDay(): ?int
+    {
+        return $this->stayDay;
+    }
+
+    public function setStayDay(int $stayDay): static
+    {
+        $this->stayDay = $stayDay;
+
+        return $this;
+    }
+
+    public function getPeople(): ?int
+    {
+        return $this->people;
+    }
+
+    public function setPeople(int $people): static
+    {
+        $this->people = $people;
+
+        return $this;
+    }
+
+    public function getChildren(): ?int
+    {
+        return $this->children;
+    }
+
+    public function setChildren(int $children): static
+    {
+        $this->children = $children;
+
+        return $this;
+    }
+
+    public function getBaby(): ?int
+    {
+        return $this->baby;
+    }
+
+    public function setBaby(int $baby): static
+    {
+        $this->baby = $baby;
+
+        return $this;
+    }
+
+    public function isAccesspool(): ?bool
+    {
+        return $this->accesspool;
+    }
+
+    public function setAccesspool(bool $accesspool): static
+    {
+        $this->accesspool = $accesspool;
+
+        return $this;
+    }
+
+    public function getDateDebut(): ?\DateTimeInterface
+    {
+        return $this->dateDebut;
+    }
+
+    public function setDateDebut(?\DateTimeInterface $dateDebut): static
+    {
+        $this->dateDebut = $dateDebut;
+
+        return $this;
+    }
+
+    public function getDateFin(): ?\DateTimeInterface
+    {
+        return $this->dateFin;
+    }
+
+    public function setDateFin(?\DateTimeInterface $dateFin): static
+    {
+        $this->dateFin = $dateFin;
 
         return $this;
     }

@@ -40,28 +40,31 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
-//    /**
-//     * @return User[] Returns an array of User objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function getOwnerBien($id)
+    {
+        $entityManager = $this->getEntityManager();
 
-//    public function findOneBySomeField($value): ?User
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $query = $entityManager->createQuery(
+            'SELECT b.id, b.imagePath, b.size, b.description, tb.label, tb.price, tb.maxPeople, u.email, u.roles, u.lastname, u.firstname, u.phone, u.address, u.zipCode, u.city, u.country
+            FROM App\Entity\Bien b
+            JOIN b.typeBien tb
+            JOIN b.user u
+            WHERE b.user = :id'
+        )->setParameter('id', $id);
+
+        return $query->getResult();
+    }
+
+    public function findMe($id)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT  u.id, u.email, u.roles, u.lastname, u.firstname, u.phone, u.address, u.zipCode, u.city, u.country
+            FROM App\Entity\User u
+            WHERE u.id = :id'
+        )->setParameter('id', $id);
+
+        return $query->getOneOrNullResult();
+    }
 }

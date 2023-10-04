@@ -54,7 +54,7 @@ class AppFixtures extends Fixture
         $camping = new Camping();
         // On set toutes ses propriétés
         $camping->setName('L’Espadrille Volante');
-        $camping->setDescription('Bienvenue au camping "Les Pins Tranquilles", un havre de paix niché au cœur d\'une forêt luxuriante.');
+        $camping->setDescription('Bienvenue au camping "L’Espadrille Volante", un havre de paix niché au cœur d\'une forêt luxuriante.');
         $camping->setAddress('123 Rue des Pins');
         $camping->setPhone('+12 345 6789');
         $camping->setZipcode('12345');

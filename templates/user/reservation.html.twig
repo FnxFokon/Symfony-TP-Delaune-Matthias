@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes reservations
+{% endblock %}
+
+{% block body %}
+
+	<h1>Mes reservations</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Type de Bien</th>
+				<th>Début du séjour</th>
+				<th>Fin du séjour</th>
+				<th>Durée du séjour</th>
+				<th>Nombre de personnes</th>
+				<th>Enfant</th>
+				<th>Bébé</th>
+				<th>Accés Piscine</th>
+				<th>Prix Définitif</th>
+				<th>Actions</th>
+
+			</tr>
+		</thead>
+		<tbody>
+			{% for reservation in reservations %}
+				<tr>
+					<td>{{ reservation.label }}
+						{{ reservation.maxPeople }}
+						personnes</td>
+
+					<td>{{ date_open(reservation.dateBegin) }}</td>
+					<td>{{ date_close(reservation.dateFin) }}</td>
+					<td>{{ reservation.stayDay }}</td>
+					<td>{{ reservation.people }}</td>
+					{% if reservation.children > 0 %}
+						<td>{{ reservation.children }}</td>
+					{% else %}
+						<td>Non</td>
+					{% endif %}
+					{% if reservation.baby > 0 %}
+						<td>{{ reservation.baby }}</td>
+					{% else %}
+						<td>Non</td>
+					{% endif %}
+					{% if reservation.accesspool %}
+						<td>Oui</td>
+					{% else %}
+						<td>Non</td>
+					{% endif %}
+
+					<td>{{ (reservation.price / 100) |number_format(2, ',', ' ') }}</td>
+					<td>
+						{# {{ path('app_user_show', {'id': user.id}) }} #}
+						<a class="btn btn-primary m-2" href="">Modifier</a>
+						<a class="btn btn-warning m-2" href="">Annuler</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">Vous n'avez pas encore de réservation actuellement</td>
+					<a class="btn btn-primary m-2" href="{{ path('app_home') }}">Réserver un de nos biens ici</a>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

@@ -20,13 +20,13 @@ class NavExtensionRuntime implements RuntimeExtensionInterface
         return $this->typeBienRepository->getCountTypebienByBien();
     }
 
-    public function dateOpen(int $dOpen)
+    public function dateOpen($dOpen)
     {
         $dateOpen = date('m/d/Y', $dOpen);
         return $dateOpen;
     }
 
-    public function dateClose(int $dClose)
+    public function dateClose($dClose)
     {
         $dateClose = date('m/d/Y', $dClose);
         return $dateClose;

@@ -60,12 +60,12 @@
 
 						{# Si utilisateur est propriétaire #}
 						{% if is_granted('ROLE_OWNER') %}
-							<a class="dropdown-item" href="#">Mes habitations</a>
+							<a class="dropdown-item" href="{{ path('app__owner_bien') }}">Mes habitations</a>
 						{% endif %}
 
 						{# Si utilisateur est juste client #}
 						{% if is_granted('ROLE_USER') %}
-							<a class="dropdown-item" href="#">Mes reservations</a>
+							<a class="dropdown-item" href="{{ path('app_compte') }}">Mon espace</a>
 						{% endif %}
 
 						<a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>

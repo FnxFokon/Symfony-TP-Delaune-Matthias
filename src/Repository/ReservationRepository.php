@@ -21,28 +21,35 @@ class ReservationRepository extends ServiceEntityRepository
         parent::__construct($registry, Reservation::class);
     }
 
-//    /**
-//     * @return Reservation[] Returns an array of Reservation objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('r.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function getReservationByBienId($id)
+    {
+        $entityManager = $this->getEntityManager();
 
-//    public function findOneBySomeField($value): ?Reservation
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $query = $entityManager->createQuery(
+            'SELECT r.dateBegin, r.dateFin, r.price, u.email, u.lastname, u.firstname, u.phone
+            FROM App\Entity\Reservation r
+            JOIN r.bien b
+            JOIN b.typeBien tb
+            JOIN r.user u
+            WHERE r.bien = :id'
+        )->setParameter('id', $id);
+
+        return $query->getResult();
+    }
+
+    public function getReservationByUserId($id)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT tb.label, tb.price as priceFlat, tb.maxPeople, r.dateBegin, r.dateFin, r.stayDay, r.people, r.children, r.baby, r.accesspool, r.price, u.email, u.lastname, u.firstname, u.phone
+            FROM App\Entity\Reservation r
+            JOIN r.bien b
+            JOIN b.typeBien tb
+            JOIN r.user u
+            WHERE r.user = :id'
+        )->setParameter('id', $id);
+
+        return $query->getResult();
+    }
 }

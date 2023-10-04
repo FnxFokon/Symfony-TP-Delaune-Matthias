@@ -4,18 +4,19 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\UserTypeUser;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ReservationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-#[Route('/admin/user')]
+
 class UserController extends AbstractController
 {
-
     // On déclare la propriété pour l'encodage
     private UserPasswordHasherInterface $encoder;
 
@@ -25,27 +26,62 @@ class UserController extends AbstractController
     }
 
 
-    #[Route('/', name: 'app_user')]
-    public function users(UserRepository $userRepository): Response
+    // ---------------- ---------------- ----------------
+
+    // ----------------- PARTIE OWNER  ------------------
+
+    // ---------------- ---------------- ----------------
+
+    #[Route('/owner', name: 'app__owner_bien')]
+    public function bienByOwner(UserRepository $userRepository): Response
     {
-        $users = $userRepository->findAll();
-        return $this->render('admin/user/indexUsers.html.twig', [
-            'users' => $users,
+        $id = $this->getUser()->getId();
+        $biens = $userRepository->getOwnerBien($id);
+        return $this->render('owner/indexBien.html.twig', [
+            'biens' => $biens,
         ]);
     }
 
-    #[Route('/show/{id}', name: 'app_user_show', methods: ['GET'])]
-    public function show(User $user): Response
+    #[Route('/owner/reservation/{id}', name: 'app__owner_reservation')]
+    public function reservationByBien(ReservationRepository $reservationRepository, int $id): Response
     {
-        return $this->render('admin/user/show.html.twig', [
+        $reservations = $reservationRepository->getReservationByBienId($id);
+        return $this->render('owner/reservations.html.twig', [
+            'reservations' => $reservations,
+        ]);
+    }
+
+
+    // ---------------- ---------------- ----------------
+
+    // ----------------- PARTIE USER  -------------------
+
+    // ---------------- ---------------- ----------------
+
+    #[Route('/user', name: 'app_compte')]
+    public function reservation(UserRepository $userRepository): Response
+    {
+
+        $id = $this->getUser()->getId();
+        $user = $userRepository->findMe($id);
+        return $this->render('user/index.html.twig', [
             'user' => $user,
         ]);
     }
 
-    #[Route('/edit/{id}', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, UserRepository $userRepository): Response
+    #[Route('/user/reservation/{id}', name: 'app_show_reservation', methods: ['GET'])]
+    public function showUser(ReservationRepository $reservationRepository, int $id): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $reservations = $reservationRepository->getReservationByUserId($id);
+        return $this->render('user/reservation.html.twig', [
+            'reservations' => $reservations,
+        ]);
+    }
+
+    #[Route('/user/edit/{id}', name: 'app_edit_user', methods: ['GET', 'POST'])]
+    public function editUser(Request $request, User $user, UserRepository $userRepository): Response
+    {
+        $form = $this->createForm(UserTypeUser::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -56,23 +92,23 @@ class UserController extends AbstractController
 
             $userRepository->save($user, true);
 
-            return $this->redirectToRoute('app_user', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_compte', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('admin/user/edit.html.twig', [
+        return $this->renderForm('user/edit.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);
     }
 
-    #[Route('/delete/{id}', name: 'app_user_delete', methods: ['POST'])]
-    public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    #[Route('/user/user/delete/{id}', name: 'app_delete_user', methods: ['POST'])]
+    public function deleteUser(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_users', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_compte', [], Response::HTTP_SEE_OTHER);
     }
 }
