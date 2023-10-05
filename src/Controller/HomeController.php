@@ -66,7 +66,8 @@ class HomeController extends AbstractController
             // $timestampDateFin = $dateFin->getTimestamp();
             // $reservation->setDateFin($timestampDateFin);
 
-            // TODO: faire une instance de USER et de BIEN pour les envoyers dans les setter
+            // TODO: Faire une instance de USER et de BIEN pour les envoyers dans les setter
+            // TODO: Faire les calculs du prix final avec tous les reduction / prix ajouter pour les inserer dans un prix final
 
 
             $reservation->setUser($userId);
