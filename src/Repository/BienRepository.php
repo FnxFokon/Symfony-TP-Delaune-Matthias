@@ -49,6 +49,7 @@ class BienRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    // Méthode pour trouver un bien en fonction de son ID
     public function findBienById($id)
     {
         //appel de l'entity manager

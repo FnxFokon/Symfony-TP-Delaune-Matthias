@@ -53,7 +53,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    // Méthode pour ajouter un jeu
+    // Méthode pour ajouter un bien
     #[Route('/bien/new', name: 'app_bien_new', methods: ['GET', 'POST'])]
     public function newBien(Request $request, BienRepository $bienRepository, TypeBienRepository $typeBienRepository, UserRepository $userRepository)
     {
@@ -85,20 +85,14 @@ class AdminController extends AbstractController
                 $bien->setImagePath($newFilename);
             }
 
-            // TODO: recupere l'ID du type de bien en fonction du form
-            // $typebien = $form->get('')->get('')->getData();
-
+            // recupere l'ID du type de bien en fonction du form
+            $typebien = $form->get('')->get('')->getData();
             // On récupere l'id du type de bien pour le donner au bien
-            // $bien->setTypeBien($typeBienRepository->find($typebien->getId()));
-
-
-            // TODO: Recupérer l'id de user en fonction du form
-            // $user = $form->get('')->get('')->getData();
-
+            $bien->setTypeBien($typeBienRepository->find($typebien->getId()));
+            // Recupérer l'id de user en fonction du form
+            $user = $form->get('')->get('')->getData();
             // On récupère l'id de infoUser
-            // $bien->setUser($userRepository->find($user->getId()));
-
-
+            $bien->setUser($userRepository->find($user->getId()));
             // On enregistre le bien dans la bdd
             $bienRepository->save($bien, true);
 
@@ -111,7 +105,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-
+    // Méthode pour modifier un bien
     #[Route('/bien/edit/{id}', name: 'app_bien_edit', methods: ['GET', 'POST'])]
     public function editBien(Request $request, Bien $bien, BienRepository $bienRepository): Response
     {
@@ -187,6 +181,7 @@ class AdminController extends AbstractController
         ]);
     }
 
+    // Méthode pour modifier un utilisateur
     #[Route('/user/edit/{id}', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function editUser(Request $request, User $user, UserRepository $userRepository): Response
     {

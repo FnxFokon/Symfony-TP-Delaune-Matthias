@@ -7,7 +7,6 @@ use Faker\Generator;
 use Faker\Factory;
 use App\Entity\User;
 use App\Entity\Camping;
-use App\Entity\Reservation;
 use App\Entity\Typebien;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
